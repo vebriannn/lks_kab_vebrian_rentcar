@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Models\Car;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -15,6 +17,7 @@ class DashboardController extends Controller
     public function index()
     {
         $cars = Car::all();
+        // $users = User::all();
 
         return view('Admin.pages.dashboard', compact('cars'));
     }
@@ -22,9 +25,28 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'images' => 'required|image|mimes:jpeg,jpg,png',
+            'brand_name' => 'required|string',
+            'price_per_day' => 'required|integer',
+            'stock' => 'required|integer',
+        ]);
+
+        $nameImages = $request->images;
+
+        $getNameImages = Str::random(10).$nameImages->getClientOriginalName();
+
+        $nameImages->storeAs('public/carspicture', $getNameImages);
+
+        $data = $request->except('_token');
+        $data['images'] = $getNameImages;
+
+        Car::create($data);
+
+        return redirect()->route('admin.dashboard')->with(['success' => 'Succes Create New Data']);
     }
 
     /**
@@ -32,15 +54,17 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function viewcars(Request $request)
     {
-        //
+        $cars = Car::all();
+
+        return view('mobil', compact('cars'));
     }
 
     /**

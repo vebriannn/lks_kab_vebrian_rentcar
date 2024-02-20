@@ -8,10 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="{{ asset('rental/assets/css/style.css') }}">
 </head>
 
 <body>
+
 
     <header>
         <nav class="navbar navbar-expand-md py-3 navbar-light bg-light">
@@ -26,17 +27,17 @@
                     <ul class="navbar-nav
                         mb-2 mb-md-0 mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link " href="index.html">
+                            <a class="nav-link " href="{{route('home')}}">
                                 Beranda
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="cars.html">
+                            <a class="nav-link " href="{{route('mobil')}}">
                                 Mobil
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="contact.html">
+                            <a class="nav-link" href="{{route('contact')}}">
                                 Kontak Kami
                             </a>
                         </li>
@@ -52,13 +53,25 @@
     </header>
 
     <section class="register py-5">
+        @if ($errors->any()) 
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>
+                            {{$error}}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 mx-auto">
                     <div class="card">
                         <div class="card-body">
                             <h3 class="text-center">Daftar</h3>
-                            <form action="success.html">
+                            <form action="{{route('admin.register.process')}}" method="post">
+                                @csrf
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Nama</label>
                                     <input type="text" class="form-control" id="name" name="name">
@@ -70,11 +83,6 @@
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" class="form-control" id="password" name="password">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="confirmPassword" class="form-label">Konfirmasi Password</label>
-                                    <input type="password" class="form-control" id="confirmPassword"
-                                        name="confirmPassword">
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100">Daftar</button>
                             </form>

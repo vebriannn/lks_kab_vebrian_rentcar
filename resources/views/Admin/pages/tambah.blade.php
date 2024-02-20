@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard</title>
+    <title>Dashboard - Create</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('sb/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -33,43 +33,52 @@
         <div id="content-wrapper" class="d-flex justfy-content-center align-items-center pt-5 mt-5">
 
             <div class="content w-75" style="margin-left: auto; margin-right: auto; !important">
-                <h1 style="color: black;">Create Data User</h1>
-                <div class="card p-5 ">
-                    <p style="color: black;">Nama Mobil</p>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="nama mobil" name="name">
-                      </div>
-                      
-                    <p style="color: black;">Brand Name</p>
-                    <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                @if ($errors->any()) 
+                    <div class="alert alert-danger ">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>
+                                    {{$error}}
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
+                @endif
+                <h1 style="color: black;">Create Data Cars</h1>
+                <div class="card p-5">
+                    <form action="{{ route('admin.add.data.process') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <p style="color: black;">Name Mobil</p>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="name cars" name="name">
+                        </div>
+                          
+                        <p style="color: black;">Images Cars</p>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupFile01">Upload</label>
+                            <input type="file" class="form-control" id="inputGroupFile01" name="images">
+                        </div>
+                          
+                        <p style="color: black;">Brand Name</p>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="brand cars" name="brand_name">
+                        </div>
+    
+                        <p style="color: black;">Price</p>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Price per day" name="price_per_day">
+                        </div>
+    
+                        <p style="color: black;">Stock</p>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Stock" name="stock">
+                        </div>
+
+                        <div class="btn-group pt-3 ">
+                            <button class="btn btn-primary px-4" type="submit">Save</button>
+                        </div>
+                    </form>
                     
-                    <div class="mb-3">
-                    <label for="basic-url" class="form-label">Your vanity URL</label>
-                    <div class="input-group">
-                        <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
-                    </div>
-                    <div class="form-text" id="basic-addon4">Example help text goes outside the input group.</div>
-                    </div>
-                    
-                    <div class="input-group mb-3">
-                    <span class="input-group-text">$</span>
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                    <span class="input-group-text">.00</span>
-                    </div>
-                    
-                    <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-                    <span class="input-group-text">@</span>
-                    <input type="text" class="form-control" placeholder="Server" aria-label="Server">
-                    </div>
-                    
-                    <div class="input-group">
-                    <span class="input-group-text">With textarea</span>
-                    <textarea class="form-control" aria-label="With textarea"></textarea>
-                    </div>
                 </div>
             </div>
 

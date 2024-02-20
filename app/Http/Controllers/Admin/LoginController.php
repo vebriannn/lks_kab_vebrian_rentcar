@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -38,6 +41,34 @@ class LoginController extends Controller
         return back()-> withErrors([
         'errors' => 'Credentials are wrong'
         ])->withInput();
+    }
+
+    public function created(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'email|required',
+            'password' => 'required',
+        ]);
+
+        
+        $data = $request->except('_token');
+        $data['role'] = 'admin';
+        $data['passwore'] = Hash::make($request->input('password'));
+        
+
+        if(User::where('email',  $request->input('email'))->doesntExist()){
+            User::create($data);
+            return redirect()->route('admin.dashboard')->with(['success' => 'Succes Create New Akun Admin']);
+        }
+        else {
+            return back()-> withErrors([
+                'errors' => 'Email Already!'
+                ])->withInput();
+        }
+        return back()-> withErrors([
+            'errors' => 'Credentials are wrong'
+            ])->withInput();
     }
 
     /**
