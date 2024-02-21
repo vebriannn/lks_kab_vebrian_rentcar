@@ -16,4 +16,8 @@ class Car extends Model
         'price_per_day',
         'stock',
     ];
+
+    public function reservation() {
+        return $this->hasMany(Reservations::class);
+    }
 }

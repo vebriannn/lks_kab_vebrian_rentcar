@@ -14,7 +14,7 @@
 <body>
 
 
-    {{-- <header>
+    <header>
         <nav class="navbar navbar-expand-md py-3 navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#">Rent Car</a>
@@ -45,15 +45,14 @@
                 </div>
 
                 <div class="d-flex">
-                    <a href="login.html" class="btn btn-outline-primary">Masuk</a>
-                    <a href="register.html" class="btn btn-primary ms-3">Daftar</a>
+                    <a href="{{ route('member.login') }}" class="btn btn-outline-primary">Masuk</a>
+                    <a href="{{ route('member.register') }}" class="btn btn-primary ms-3">Daftar</a>
                 </div>
             </div>
         </nav>
-    </header> --}}
+    </header>
 
-    <section class="login py-5">
-        <div class="container">
+    <section class="register py-5">
         @if ($errors->any()) 
             <div class="alert alert-danger">
                 <ul>
@@ -65,23 +64,27 @@
                 </ul>
             </div>
         @endif
+        <div class="container">
             <div class="row">
                 <div class="col-lg-6 mx-auto">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="text-center">Masuk</h3>
-                            <form action="{{ route('admin.login.auth') }}" method="POST">
+                            <h3 class="text-center">Daftar</h3>
+                            <form action="{{route('member.register.process')}}" method="post">
                                 @csrf
                                 <div class="mb-3">
+                                    <label for="name" class="form-label">Nama</label>
+                                    <input type="text" class="form-control" id="name" name="name">
+                                </div>
+                                <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" >
+                                    <input type="email" class="form-control" id="email" name="email">
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" class="form-control" id="password" name="password">
-
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">Masuk</button>
+                                <button type="submit" class="btn btn-primary w-100">Daftar</button>
                             </form>
                         </div>
                     </div>

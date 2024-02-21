@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,19 +9,15 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 
+
 class LoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        return view('Admin.login');
+        return view('member.login');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function authenticate(Request $request)
     {
         $request->validate([
@@ -30,18 +26,18 @@ class LoginController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        $credentials['role'] = 'admin'; 
 
         if(Auth::attempt($credentials)) 
         {
             $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('home');
         };
 
         return back()-> withErrors([
         'errors' => 'Credentials are wrong'
         ])->withInput();
     }
+    
 
     public function created(Request $request)
     {
@@ -53,15 +49,13 @@ class LoginController extends Controller
 
         
         $data = $request->except('_token');
-        $data['role'] = 'admin';
+        $data['role'] = 'member';
         $data['passwore'] = Hash::make($request->input('password'));
-
-        $checkEmail = User::where('email',  $request->input('email'))->doesntExist();
         
 
-        if($checkEmail){
+        if(User::where('email',  $request->input('email'))->doesntExist()){
             User::create($data);
-            return redirect()->route('admin.dashboard')->with(['success' => 'Succes Create New Akun Admin']);
+            return redirect()->route('cars')->with(['success' => 'Succes Create New Akun Admin']);
         }
         else {
             return back()-> withErrors([
@@ -73,7 +67,6 @@ class LoginController extends Controller
             ])->withInput();
     }
 
-
     public function logout(Request $request)
     {
         Auth::logout();
@@ -81,7 +74,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('admin.login');
+        return redirect()->route('member.login');
     }
-
+    
 }

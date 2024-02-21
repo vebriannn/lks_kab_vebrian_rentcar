@@ -20,9 +20,18 @@ class AdminAuthenticate
         $user = Auth::user();
 
         if($user) {
-            return $next($request);
+            if($user->role == 'admin') {
+                return $next($request);
+            }
+            else {
+                Auth::logout();
+
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+            }
         }
 
-        return route('admin.login');
+        return redirect()->route('admin.login');
     }
 }

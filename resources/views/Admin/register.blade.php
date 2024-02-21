@@ -14,7 +14,7 @@
 <body>
 
 
-    <header>
+    {{-- <header>
         <nav class="navbar navbar-expand-md py-3 navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#">Rent Car</a>
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header> --}}
 
     <section class="register py-5">
         @if ($errors->any()) 

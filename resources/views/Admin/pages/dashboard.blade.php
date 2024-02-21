@@ -17,6 +17,7 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('sb/css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -44,7 +45,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -56,7 +57,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="{{ route('admin.transaction') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Transactions</span></a>
             </li>
@@ -68,7 +69,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
 
             @if (session()->has('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="z-index: 10; !important">
                     <strong>{{ session('success') }}</strong> 
                     <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -98,37 +99,9 @@
                             </div>
                         </div>
                     </form>
-                    <ul>
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" id="userDropdown" role="button" 
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Vebrian</span>
-                                <img class="img-profile rounded-circle" src="{{asset('sb/img/undraw_profile.svg')}} ">
-                            </a>        
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-
+                    <div class="profile d-flex align-items-center">
+                        <p  class="p-0 m-0">Hallo {{$users->name}}, Logout <a href="{{route('admin.logout')}}">Disini.</a></p>
+                    </div>
                 </nav>
                 <!-- End of Topbar -->
 
@@ -139,12 +112,10 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    {{-- <div class="row">
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -228,7 +199,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
                 <!-- /.container-fluid -->
@@ -259,7 +230,7 @@
                                             <td>{{ $car->price_per_day }}</td>
                                             <td>{{ $car->stock }}</td>
                                             <td>
-                                                <a href="" style="text-decoration: none; color:black;" class="ms-5"><i class="bi bi-pencil"></i></a>
+                                                <a href="{{ route('admin.edit.data', $car->id) }}" style="text-decoration: none; color:black;" class="ms-5"><i class="bi bi-pencil"></i></a>
                                                 <a href="{{ route('admin.delete.data', $car->id)   }}" style="text-decoration: none; color:black; margin-left: 6px;" class="me-5"><i class="bi bi-trash3-fill"></i></a>
                                             </td>
                                         </tr>
@@ -304,6 +275,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('sb/js/sb-admin-2.min.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 
